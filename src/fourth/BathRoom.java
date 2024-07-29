@@ -1,0 +1,25 @@
+package fourth;
+
+public class BathRoom extends BedRoom{
+    private String colorOfMat;
+
+    public BathRoom(int ledLight, String colorOfMat) {
+        super(ledLight);
+        this.colorOfMat = colorOfMat;
+    }
+
+    public String getColorOfMat() {
+        return colorOfMat;
+    }
+
+    public void setColorOfMat(String colorOfMat) {
+        this.colorOfMat = colorOfMat;
+    }
+
+    @Override
+    public String toString() {
+        return "BathRoom{" +
+                "colorOfMat='" + colorOfMat + '\'' +
+                '}';
+    }
+}
