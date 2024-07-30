@@ -1,4 +1,9 @@
 package fourth;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 public class Refrigerator extends Kitchen {
 
@@ -9,13 +14,6 @@ public class Refrigerator extends Kitchen {
         this.numberOfFruitsVariety = numberOfFruitsVariety;
     }
 
-    public int getNumberOfFruitsVariety() {
-        return numberOfFruitsVariety;
-    }
-
-    public void setNumberOfFruitsVariety(int numberOfFruitsVariety) {
-        this.numberOfFruitsVariety = numberOfFruitsVariety;
-    }
 
     @Override
     public String toString() {

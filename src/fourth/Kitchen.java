@@ -1,7 +1,13 @@
 package fourth;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 
 public class Kitchen extends House {
     private int guaranteeOfElectricThings;
+    @Getter
     private boolean spoiledFood;
 
     public Kitchen(int guaranteeOfElectricThings, boolean spoiledFood) {
@@ -9,21 +15,6 @@ public class Kitchen extends House {
         this.spoiledFood = spoiledFood;
     }
 
-    public int getGuaranteeOfElectricThings() {
-        return guaranteeOfElectricThings;
-    }
-
-    public void setGuaranteeOfElectricThings(int guaranteeOfElectricThings) {
-        this.guaranteeOfElectricThings = guaranteeOfElectricThings;
-    }
-
-    public boolean isSpoiledFood() {
-        return spoiledFood;
-    }
-
-    public void setSpoiledFood(boolean spoiledFood) {
-        this.spoiledFood = spoiledFood;
-    }
 
     @Override
     public String toString() {

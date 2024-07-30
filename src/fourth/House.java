@@ -1,5 +1,6 @@
 package fourth;
 
+
 public abstract class House {
     private float height ;
     private int area ;

@@ -1,5 +1,13 @@
 package fourth;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+
 public class ReceptionRoom extends House {
     private int carpetArea;
     private String nameOfItems ;
@@ -9,24 +17,7 @@ public class ReceptionRoom extends House {
         this.nameOfItems = nameOfItems;
     }
 
-    public ReceptionRoom() {
-    }
 
-    public int getCarpetArea() {
-        return carpetArea;
-    }
-
-    public void setCarpetArea(int carpetArea) {
-        this.carpetArea = carpetArea;
-    }
-
-    public String getNameOfItems() {
-        return nameOfItems;
-    }
-
-    public void setNameOfItems(String nameOfItems) {
-        this.nameOfItems = nameOfItems;
-    }
 
     @Override
     public String toString() {
