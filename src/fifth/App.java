@@ -3,6 +3,7 @@ package fifth;
 import fifth.da.ProductDa;
 import fifth.entity.Product;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -94,6 +95,24 @@ public class App {
                     break;
 
                     case 6:
+
+                        class print {
+                            public void printInvoice(List<Product> products) {
+                                System.out.printf("%-20s %-10s %-10s%n", "name", "count", "price");
+                                System.out.println("-------------------------------------");
+
+                                int total = 0;
+                                for (Product product : products) {
+                                    System.out.printf("%-20s %-10d %-10d%n", product.getName(), product.getCount(), product.getPrice());
+                                    total += product.getPrice() * product.getCount();
+                                }
+
+                                System.out.println("-------------------------------------");
+                                System.out.printf("%-20s %-10s %-10d%n", "total price", "", total);
+                                System.out.println("-------------------------------------");
+                            }
+                        }
+
 
                         break;
 
