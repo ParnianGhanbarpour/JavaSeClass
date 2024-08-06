@@ -85,11 +85,13 @@ public class App {
                         break;
 
                     case 5:
+                        int totalSum = 0;
+                        for (Product p : productDa.findAll()) {
+                            totalSum +=p.getPrice() * p.getCount();
+                        }
+                        System.out.printf("Total Price: %d%n", totalSum);
 
-                        System.out.print(" Total Price  : ");
-                        System.out.println(sum);
-
-                        break;
+                    break;
 
                     case 6:
 
@@ -100,7 +102,7 @@ public class App {
                         break;
                     default:
                         System.err.println("Invalid Choice");
-                        ;
+
                 }
                 System.out.println("-----------------------------------------");
             } catch (Exception e) {
