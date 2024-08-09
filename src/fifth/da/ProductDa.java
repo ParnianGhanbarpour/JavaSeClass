@@ -31,7 +31,7 @@ public class ProductDa {
     public void edit(Product product)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "UPDATE Product_TBL SET NAME = ?, Price = ?,Count =?,sum =? WHERE ID = ?"
+                "UPDATE Product_TBL SET name = ?, Price = ?,Count =?,sum =? WHERE id = ?"
         );
         preparedStatement.setString(1, product.getName());
         preparedStatement.setInt(2, product.getPrice());
@@ -48,7 +48,7 @@ public class ProductDa {
     public void remove(int id)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "DELETE FROM Product_TBL WHERE ID = ?"
+                "DELETE FROM Product_TBL WHERE id = ?"
         );
         preparedStatement.setInt(1, id);
         preparedStatement.execute();
@@ -58,7 +58,7 @@ public class ProductDa {
     public List<Product> findAll()throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM Product_TBL ORDER BY ID"
+                "SELECT * FROM Product_TBL ORDER BY id"
         );
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -81,7 +81,7 @@ public class ProductDa {
     public Product findById(int id)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM Product_TBL WHERE ID = ?"
+                "SELECT * FROM Product_TBL WHERE id = ?"
         );
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -105,7 +105,7 @@ public class ProductDa {
     public Product findByName(String name)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM Product_TBL WHERE USERNAME = ?"
+                "SELECT * FROM Product_TBL WHERE name = ?"
         );
         preparedStatement.setString(1, name);
         ResultSet resultSet = preparedStatement.executeQuery();
