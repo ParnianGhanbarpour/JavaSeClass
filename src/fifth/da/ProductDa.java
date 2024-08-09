@@ -129,7 +129,7 @@ public class ProductDa {
     public Product findByUsernameAndPrice(String name, int price)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM Product_TBL WHERE NAME = ? AND Price = ?"
+                "SELECT * FROM Product_TBL WHERE name = ? AND Price = ?"
         );
         preparedStatement.setString(1, name);
         preparedStatement.setInt(2, price);
