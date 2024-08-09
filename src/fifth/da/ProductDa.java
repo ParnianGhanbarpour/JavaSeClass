@@ -81,7 +81,7 @@ public class ProductDa {
     public Product findById(int id)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM USER_TBL WHERE ID = ?"
+                "SELECT * FROM Product_TBL WHERE ID = ?"
         );
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -105,7 +105,7 @@ public class ProductDa {
     public Product findByName(String name)throws Exception {
         connect();
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM USER_TBL WHERE USERNAME = ?"
+                "SELECT * FROM Product_TBL WHERE USERNAME = ?"
         );
         preparedStatement.setString(1, name);
         ResultSet resultSet = preparedStatement.executeQuery();

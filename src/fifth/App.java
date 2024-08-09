@@ -93,7 +93,7 @@ public class App {
                         }
                         System.out.printf("Total Price: %d%n", totalSum);
 
-                    break;
+                        break;
 
                     case 6:
 
