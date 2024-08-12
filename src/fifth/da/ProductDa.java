@@ -17,12 +17,16 @@ public class ProductDa {
         );
     }
 
-    public void save(Product product) throws Exception{
+    public void save(Product product) throws Exception {
+        connect();
+        preparedStatement = connection.prepareStatement(
+                "INSERT INTO Product_TBL (NAME, Price, Count, Sum) VALUES (?, ?, ?, ?)"
+        );
         preparedStatement.setString(1, product.getName());
         preparedStatement.setInt(2, product.getPrice());
         preparedStatement.setInt(3, product.getCount());
-        int sum = (product.getCount()*product.getCount());
-        preparedStatement.setInt(4,sum);
+        int sum = (product.getPrice() * product.getCount());
+        preparedStatement.setInt(4, sum);
 
         preparedStatement.execute();
         close();
