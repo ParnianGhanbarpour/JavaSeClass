@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDa implements AutoCloseable {
-    private Connection connection;
+    private final Connection connection;
     private PreparedStatement preparedStatement;
     JdbcProvider jdbcProvider = new JdbcProvider();
 
@@ -21,16 +21,16 @@ public class ProductDa implements AutoCloseable {
         connection = jdbcProvider.getConnection();
     }
 
-    public static void save(Product product) throws SQLException {
+    public void save(Product product) throws SQLException {
         product.setId(jdbcProvider.getNextId("PRODUCT_SEQ"));
         preparedStatement = connection.prepareStatement(
-                "INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)"
+                "INSERT INTO PRODUCT VALUES(?,?,?,?,?)"
         );
-        preparedStatement.setString(1, product.getName());
-        preparedStatement.setString(2, String.valueOf(product.getBrand()));
-        preparedStatement.setInt(3, product.getCount());
+        preparedStatement.setInt(1, product.getId());
+        preparedStatement.setString(2, product.getName());
+        preparedStatement.setString(3, String.valueOf(product.getBrand()));
         preparedStatement.setInt(4,product.getPrice());
-        preparedStatement.setInt(5, product.getId());
+        preparedStatement.setInt(5, product.getCount());
         preparedStatement.execute();
     }
 
@@ -40,8 +40,8 @@ public class ProductDa implements AutoCloseable {
         );
         preparedStatement.setString(1, product.getName());
         preparedStatement.setString(2, String.valueOf(product.getBrand()));
-        preparedStatement.setInt(3, product.getCount());
         preparedStatement.setInt(4,product.getPrice());
+        preparedStatement.setInt(3, product.getCount());
         preparedStatement.setInt(5, product.getId());
         preparedStatement.execute();
     }
@@ -60,10 +60,10 @@ public class ProductDa implements AutoCloseable {
         );
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        List<Product> personList = new ArrayList<>();
+        List<Product> productList = new ArrayList<>();
 
         while (resultSet.next()) {
-            Product person =
+            Product product =
                     Product
                             .builder()
                             .id(resultSet.getInt("ID"))
@@ -71,16 +71,16 @@ public class ProductDa implements AutoCloseable {
                             .brand(Brand.valueOf(resultSet.getString("Brand")))
                             .price(resultSet.getInt("price"))
                             .count(resultSet.getInt("count"))
-
                             .build();
-            personList.add(person);
+            productList.add(product);
         }
-        return personList;
+        return productList;
     }
 
 
     @Override
     public void close() throws Exception {
-
+        preparedStatement.close();
+        connection.close();
     }
 }
