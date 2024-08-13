@@ -8,7 +8,7 @@ public class ProductTest {
     public static void main(String[] args) throws Exception {
 //        try with resource
         try(ProductDa personDa = new ProductDa()){
-            ProductDa.save(null);
+            personDa.save(null);
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }

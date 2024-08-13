@@ -14,9 +14,10 @@ import lombok.experimental.SuperBuilder;
 public class Product {
     private int id;
     private String name;
+    private Brand brand;
     private int price;
     private int count;
-    private Brand brand;
+
 
     @Override
     public String toString() {
