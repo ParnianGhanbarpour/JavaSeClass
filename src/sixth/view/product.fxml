@@ -50,9 +50,9 @@
                         <ToggleGroup fx:id="brandToggle" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="louisBtn" mnemonicParsing="false" text="Louis Vuitton" toggleGroup="$brandToggle" GridPane.columnIndex="1" />
-                  <RadioButton fx:id="zaraBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="90.0" selected="true" text="Zara" toggleGroup="$brandToggle" GridPane.rowIndex="1" />
-                  <RadioButton fx:id="nikeBtn" mnemonicParsing="false" text="Nike" toggleGroup="$brandToggle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="louisBtn" mnemonicParsing="false" text="Louis Vuitton" toggleGroup="brandToggle" GridPane.columnIndex="1" />
+                  <RadioButton fx:id="zaraBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="90.0" selected="true" text="Zara" toggleGroup="brandToggle" GridPane.rowIndex="1" />
+                  <RadioButton fx:id="nikeBtn" mnemonicParsing="false" text="Nike" toggleGroup="brandToggle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <Label prefHeight="36.0" prefWidth="71.0" text="Brand   :" GridPane.rowIndex="2" />
@@ -63,10 +63,10 @@
             <TableColumn fx:id="idCol" prefWidth="87.0" text="ID" />
             <TableColumn fx:id="nameCol" prefWidth="103.0" text="Name" />
             <TableColumn fx:id="brandCol" prefWidth="74.0" text="Brand" />
-            <TableColumn fx:id="totalPriceCol" prefWidth="87.0" text="Total Price" />
+            <TableColumn fx:id="priceCol" prefWidth="87.0" text="Price" />
          </columns>
       </TableView>
-      <Button fx:id="editeBtn" layoutX="163.0" layoutY="22.0" mnemonicParsing="false" text="Edite" />
+      <Button fx:id="editBtn" layoutX="163.0" layoutY="22.0" mnemonicParsing="false" text="Edit" />
       <Button fx:id="removeBtn" layoutX="84.0" layoutY="22.0" mnemonicParsing="false" text="Remove" />
       <Button fx:id="saveBtn" layoutX="222.0" layoutY="22.0" mnemonicParsing="false" text="Save" />
    </children>
