@@ -63,7 +63,7 @@
                 <TableColumn fx:id="idCol" prefWidth="87.0" text="ID" />
                 <TableColumn fx:id="nameCol" prefWidth="103.0" text="Name" />
                 <TableColumn fx:id="brandCol" prefWidth="74.0" text="Brand" />
-                <TableColumn fx:id="totalPriceCol" prefWidth="87.0" text="Total Price" />
+                <TableColumn fx:id="priceCol" prefWidth="87.0" text="Price" />
             </columns>
         </TableView>
         <Button fx:id="editeBtn" layoutX="163.0" layoutY="22.0" mnemonicParsing="false" text="Edite" />
