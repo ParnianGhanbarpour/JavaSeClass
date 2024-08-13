@@ -21,7 +21,7 @@ public class ProductDa implements AutoCloseable {
         connection = jdbcProvider.getConnection();
     }
 
-    public void save(Product product) throws SQLException {
+    public static void save(Product product) throws SQLException {
         product.setId(jdbcProvider.getNextId("PRODUCT_SEQ"));
         preparedStatement = connection.prepareStatement(
                 "INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)"
