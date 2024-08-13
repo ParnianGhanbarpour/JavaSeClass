@@ -1,4 +1,4 @@
-package sixth.utils;
+package sixth.model.utils;
 
 import java.util.regex.Pattern;
 

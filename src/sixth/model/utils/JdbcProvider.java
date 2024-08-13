@@ -1,4 +1,4 @@
-package sixth.utils;
+package sixth.model.utils;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

@@ -9,32 +9,35 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sixth.model.da.ProductDa;
 import sixth.model.entity.Brand;
 import sixth.model.entity.Product;
+import sixth.model.utils.Validation;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static sixth.model.entity.Brand.zara;
+
 public class ProductControllers implements Initializable {
+    private Validation validation =new Validation();
 
     @FXML
     private TextField idTxt,nameTxt,priceTxt,countTxt;
     @FXML
     private ToggleGroup brandToggle;
     @FXML
-    private RadioButton zaraBtn;
+    private RadioButton zaraBtn,louseVuittonBtn,nikeBtn,gucciBtn;
     @FXML
-    private Button saveBtn,removeBtn,editeBtn;
+    private Button saveBtn, editBtn, removeBtn;
     @FXML
     private TableView<Product>productTable;
     @FXML
-    private TableColumn<Product,Integer> idCol, totalPriceCol;
+    private TableColumn<Product,Integer> idCol, priceCol,countCol;
     @FXML
     private TableColumn<Product,String> nameCol,brandCol;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
+     resetForm();
 
         saveBtn.setOnAction(event -> {
 
@@ -43,10 +46,11 @@ public class ProductControllers implements Initializable {
             Product product =
                     Product
                             .builder()
+                            .id(Integer.parseInt(idTxt.getText()))
                             .name(validation.nameValidator(nameTxt.getText()))
                             .brand(Brand.valueOf(selectedRdo.getText()))
-                            .price()
-                            .count()
+                            .price(Integer.parseInt(priceTxt.getText()))
+                            .count(Integer.parseInt(countTxt.getText()))
                             .build();
             productDa.save(product);
 
@@ -60,7 +64,7 @@ public class ProductControllers implements Initializable {
         });
 
          editBtn.setOnAction(event -> {
-        try (ProductD productDa = new ProductDa()) {
+        try (ProductDa productDa = new ProductDa()) {
             // Data Validation
             RadioButton selectedRdo = (RadioButton) brandToggle.getSelectedToggle();
             Product product =
@@ -68,9 +72,9 @@ public class ProductControllers implements Initializable {
                             .builder()
                             .id(Integer.parseInt(idTxt.getText()))
                             .name(validation.nameValidator(nameTxt.getText()))
-                            .family(validation.familyValidator(familyTxt.getText()))
-                            .gender(Gender.valueOf(selectedRdo.getText()))
-                            .birthDate(birthDate.getValue())
+                            .brand(Brand.valueOf(selectedRdo.getText()))
+                            .price(Integer.parseInt(priceTxt.getText()))
+                            .count(Integer.parseInt(countTxt.getText()))
 
                             .build();
             productDa.edit(product);
@@ -89,16 +93,13 @@ public class ProductControllers implements Initializable {
             // Data Validation
             RadioButton selectedRdo = (RadioButton) brandToggle.getSelectedToggle();
             Product product =
-                    product
+                    Product
                             .builder()
                             .id(Integer.parseInt(idTxt.getText()))
                             .name(validation.nameValidator(nameTxt.getText()))
-                            .family(validation.familyValidator(familyTxt.getText()))
-                            .gender(Gender.valueOf(selectedRdo.getText()))
-                            .birthDate(birthDate.getValue())
-                            .city(City.valueOf(cityCmb.getSelectionModel().getSelectedItem()))
-                            .seSkill(seChk.isSelected())
-                            .eeSkill(eeChk.isSelected())
+                            .brand(Brand.valueOf(selectedRdo.getText()))
+                            .price(Integer.parseInt(priceTxt.getText()))
+                            .count(Integer.parseInt(countTxt.getText()))
                             .build();
             productDa.edit(product);
 
@@ -112,23 +113,26 @@ public class ProductControllers implements Initializable {
     });
 
 
-          productTable.setOnMouseReleased(event->{
+          productTable.setOnMouseReleased(event -> {
         Product product = productTable.getSelectionModel().getSelectedItem();
         idTxt.setText(String.valueOf(product.getId()));
         nameTxt.setText(product.getName());
-        priceTxt.setText(String.valueOf(product.getPrice()));
         if(product.getBrand().equals(Brand.zara){
             zaraBtn.setSelected(true);
-        }else {
-            //fix it
+        }if(product.getBrand().equals(Brand.gucci){
             gucciBtn.setSelected(true);
         }
+        if(product.getBrand().equals(Brand.louise_vuitton){
+            louiseVuittonBtn.setSelected(true);
+        }
+        if(product.getBrand().equals(Brand.nike){
+            nikeBtn.setSelected(true);
+        }
+        priceTxt.setText(String.valueOf(product.getPrice()));
+        countTxt.setText(String.valueOf(product.getCount()));
 
     });
 }
-
-
-
 
 
         private void resetForm(){
@@ -150,11 +154,10 @@ public class ProductControllers implements Initializable {
 
     private void refreshTable(List<Product> productList) {
         ObservableList<Product> products = FXCollections.observableList(productList);
-
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         brandCol.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        totalPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         productTable.setItems(products);
     }

@@ -2,7 +2,7 @@ package sixth.model.da;
 
 import sixth.model.entity.Brand;
 import sixth.model.entity.Product;
-import sixth.utils.JdbcProvider;
+import sixth.model.utils.JdbcProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
