@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="674.0" style="-fx-background-color: #7BA6B4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sixth.controllers.ProductControllers">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="741.0" style="-fx-background-color: #7BA6B4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sixth.controllers.ProductControllers">
     <children>
         <GridPane layoutX="14.0" layoutY="48.0" prefHeight="318.0" prefWidth="257.0">
             <columnConstraints>
@@ -50,7 +50,7 @@
                                 <ToggleGroup fx:id="brandToggle" />
                             </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="louisBtn" mnemonicParsing="false" text="Louis Vuitton" toggleGroup="$brandToggle" GridPane.columnIndex="1" />
+                        <RadioButton fx:id="louseVuittonBtn" mnemonicParsing="false" text="Louis Vuitton" toggleGroup="$brandToggle" GridPane.columnIndex="1" />
                         <RadioButton fx:id="zaraBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="90.0" selected="true" text="Zara" toggleGroup="$brandToggle" GridPane.rowIndex="1" />
                         <RadioButton fx:id="nikeBtn" mnemonicParsing="false" text="Nike" toggleGroup="$brandToggle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
@@ -58,15 +58,16 @@
                 <Label prefHeight="36.0" prefWidth="71.0" text="Brand   :" GridPane.rowIndex="2" />
             </children>
         </GridPane>
-        <TableView layoutX="304.0" layoutY="25.0" prefHeight="328.0" prefWidth="352.0" style="-fx-border-color: #7BA6B4;">
+        <TableView fx:id="productTable" layoutX="278.0" layoutY="22.0" prefHeight="328.0" prefWidth="441.0" style="-fx-border-color: #7BA6B4;">
             <columns>
                 <TableColumn fx:id="idCol" prefWidth="87.0" text="ID" />
                 <TableColumn fx:id="nameCol" prefWidth="103.0" text="Name" />
                 <TableColumn fx:id="brandCol" prefWidth="74.0" text="Brand" />
                 <TableColumn fx:id="priceCol" prefWidth="87.0" text="Price" />
+            <TableColumn fx:id="countCol" prefWidth="87.0" text="Count" />
             </columns>
         </TableView>
-        <Button fx:id="editeBtn" layoutX="163.0" layoutY="22.0" mnemonicParsing="false" text="Edite" />
+        <Button fx:id="editBtn" layoutX="163.0" layoutY="22.0" mnemonicParsing="false" text="Edit" />
         <Button fx:id="removeBtn" layoutX="84.0" layoutY="22.0" mnemonicParsing="false" text="Remove" />
         <Button fx:id="saveBtn" layoutX="222.0" layoutY="22.0" mnemonicParsing="false" text="Save" />
     </children>

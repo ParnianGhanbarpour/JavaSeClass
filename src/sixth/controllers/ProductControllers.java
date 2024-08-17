@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductControllers implements Initializable {
-    private Validation validation = new Validation();
+    private final Validation validation = new Validation();
 
     @FXML
     private TextField idTxt, nameTxt, priceTxt, countTxt;
     @FXML
     private ToggleGroup brandToggle;
     @FXML
-    private RadioButton zaraBtn, louseVuittonBtn, nikeBtn, gucciBtn;
+    private RadioButton zaraBtn, louseVuittonBtn , nikeBtn, gucciBtn;
     @FXML
     private Button saveBtn, editBtn, removeBtn;
     @FXML
@@ -51,7 +51,7 @@ public class ProductControllers implements Initializable {
                                 .build();
                 productDa.save(product);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "product Saved\n" + product.toString());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "product Saved\n" + product);
                 alert.show();
                 resetForm();
             } catch (Exception e) {
@@ -75,7 +75,7 @@ public class ProductControllers implements Initializable {
                                 .build();
                 productDa.edit(product);
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Product Edited\n" + product.toString());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Product Edited\n" + product);
                 alert.show();
                 resetForm();
             } catch (Exception e) {
@@ -83,6 +83,23 @@ public class ProductControllers implements Initializable {
                 alert.show();
             }
         });
+        removeBtn.setOnAction(event -> {
+            try (ProductDa productDa = new ProductDa()) {
+                Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure To Remove Product ?");
+                if (confirmAlert.showAndWait().get() == ButtonType.OK) {
+                    int id = Integer.parseInt(idTxt.getText());
+                    productDa.remove(id);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Product Removed With ID : " + id);
+                    alert.show();
+                    resetForm();
+                }
+
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Product Remove Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
 
         productTable.setOnMouseReleased(event -> {
             Product product = productTable.getSelectionModel().getSelectedItem();
@@ -127,6 +144,7 @@ public class ProductControllers implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         brandCol.setCellValueFactory(new PropertyValueFactory<>("brand"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        countCol.setCellValueFactory(new PropertyValueFactory<>("count"));
 
         productTable.setItems(products);
     }
