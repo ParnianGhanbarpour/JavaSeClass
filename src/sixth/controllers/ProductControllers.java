@@ -105,16 +105,16 @@ public class ProductControllers implements Initializable {
             Product product = productTable.getSelectionModel().getSelectedItem();
             idTxt.setText(String.valueOf(product.getId()));
             nameTxt.setText(product.getName());
-            if (product.getBrand().equals(Brand.zara)) {
+            if (product.getBrand().equals(Brand.Zara)) {
                 zaraBtn.setSelected(true);
             }
-            if (product.getBrand().equals(Brand.gucci)) {
+            if (product.getBrand().equals(Brand.Gucci)) {
                 gucciBtn.setSelected(true);
             }
-            if (product.getBrand().equals(Brand.louise_vuitton)) {
+            if (product.getBrand().equals(Brand.LouiseVuitton)) {
                 louseVuittonBtn.setSelected(true);
             }
-            if (product.getBrand().equals(Brand.nike)) {
+            if (product.getBrand().equals(Brand.Nike)) {
                 nikeBtn.setSelected(true);
             }
             priceTxt.setText(String.valueOf(product.getPrice()));

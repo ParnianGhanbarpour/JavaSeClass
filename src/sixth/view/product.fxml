@@ -50,7 +50,7 @@
                                 <ToggleGroup fx:id="brandToggle" />
                             </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="louseVuittonBtn" mnemonicParsing="false" text="Louis Vuitton" toggleGroup="$brandToggle" GridPane.columnIndex="1" />
+                        <RadioButton fx:id="louseVuittonBtn" mnemonicParsing="false" text="LouiseVuitton" toggleGroup="$brandToggle" GridPane.columnIndex="1" />
                         <RadioButton fx:id="zaraBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="90.0" selected="true" text="Zara" toggleGroup="$brandToggle" GridPane.rowIndex="1" />
                         <RadioButton fx:id="nikeBtn" mnemonicParsing="false" text="Nike" toggleGroup="$brandToggle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>

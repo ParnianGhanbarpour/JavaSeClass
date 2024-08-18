@@ -11,10 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class ProductDa implements AutoCloseable {
     private final Connection connection;
     private PreparedStatement preparedStatement;
-    JdbcProvider jdbcProvider = new JdbcProvider();
+    private JdbcProvider jdbcProvider = new JdbcProvider();
 
 
     public ProductDa() throws SQLException {
@@ -83,4 +85,6 @@ public class ProductDa implements AutoCloseable {
         preparedStatement.close();
         connection.close();
     }
+
+
 }
