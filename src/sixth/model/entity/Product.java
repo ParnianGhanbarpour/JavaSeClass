@@ -17,6 +17,7 @@ public class Product {
     private Brand brand;
     private int price;
     private int count;
+    private Person owner;
 
 
     @Override

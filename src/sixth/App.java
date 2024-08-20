@@ -8,10 +8,13 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("view/product.fxml")));
+        primaryStage.setTitle("product Manager");
+        Scene scene =
+                new Scene(FXMLLoader
+                        .load(getClass().getResource("view/main.fxml")));
         primaryStage.setScene(scene);
 
-        primaryStage.setTitle("product");
+
         primaryStage.show();
     }
 }

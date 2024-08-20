@@ -78,6 +78,39 @@ public class ProductDa implements AutoCloseable {
         }
         return productList;
     }
+    public Product findById(Integer id) throws Exception {
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM PRODUCT WHERE ID=?"
+        );
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Product product = null;
+
+        if (resultSet.next()) {
+
+            product =
+                    Product
+                            .builder()
+                            .id(resultSet.getInt("ID"))
+                            .name(resultSet.getString("NAME"))
+                            .brand(Brand.valueOf(resultSet.getString("Brand")))
+                            .price(resultSet.getInt("price"))
+                            .count(resultSet.getInt("count"))
+                            .build();
+        }
+        return product;
+    }
+    public int findCountByPersonId(int personId) throws SQLException {
+        preparedStatement = connection.prepareStatement(
+                "SELECT COUNT(*) AS PRODUCT_COUNT FROM PRODUCT WHERE ID=?"
+        );
+        preparedStatement.setInt(1, personId);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        return resultSet.getInt("PRODUCT_COUNT");
+    }
+
 
 
     @Override
