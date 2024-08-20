@@ -9,9 +9,10 @@ import java.sql.SQLException;
 
 public class JdbcProvider {
     @Getter
-    private static JdbcProvider jdbcProvider = new JdbcProvider();
-    private static BasicDataSource basicDataSource = new BasicDataSource();
-
+    private final static JdbcProvider jdbcProvider = new JdbcProvider();
+    private final static BasicDataSource basicDataSource = new BasicDataSource();
+    private JdbcProvider() {
+    }
     public static Connection getConnection() throws SQLException {
         basicDataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
         basicDataSource.setUrl("jdbc:oracle:thin:@localhost:1521:xe");

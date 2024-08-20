@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDa implements DataAccess<Person, Integer> {
-    private Connection connection;
+    private final Connection connection;
     private PreparedStatement preparedStatement;
     public PersonDa() throws SQLException {
         connection = JdbcProvider.getConnection();

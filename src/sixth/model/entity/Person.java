@@ -1,5 +1,6 @@
 package sixth.model.entity;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Getter
 @Setter
@@ -19,6 +21,5 @@ public class Person {
     private Gender gender;
     private LocalDate birthDate;
     private List<Product>productList;
-
 
 }
