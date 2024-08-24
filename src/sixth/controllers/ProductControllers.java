@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 public class ProductControllers implements Initializable {
     private final Validation validation = new Validation();
 
+
     @FXML
     private TextField idTxt, nameTxt, priceTxt, countTxt;
     @FXML
@@ -44,7 +45,7 @@ public class ProductControllers implements Initializable {
                         Product
                                 .builder()
                                 .id(Integer.parseInt(idTxt.getText()))
-                                .name(validation.nameValidator(nameTxt.getText()))
+                                .name(validation.productNameValidator(nameTxt.getText()))
                                 .brand(Brand.valueOf(selectedRdo.getText()))
                                 .price(Integer.parseInt(priceTxt.getText()))
                                 .count(Integer.parseInt(countTxt.getText()))
@@ -68,7 +69,7 @@ public class ProductControllers implements Initializable {
                         Product
                                 .builder()
                                 .id(Integer.parseInt(idTxt.getText()))
-                                .name(validation.nameValidator(nameTxt.getText()))
+                                .name(validation.productNameValidator(nameTxt.getText()))
                                 .brand(Brand.valueOf(selectedRdo.getText()))
                                 .price(Integer.parseInt(priceTxt.getText()))
                                 .count(Integer.parseInt(countTxt.getText()))

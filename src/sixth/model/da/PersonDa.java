@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDa implements DataAccess<Person, Integer> {
+public class PersonDa implements DataAccess<Person, Integer>{
     private final Connection connection;
     private PreparedStatement preparedStatement;
     public PersonDa() throws SQLException {
@@ -82,7 +82,7 @@ public class PersonDa implements DataAccess<Person, Integer> {
                             .family(resultSet.getString("FAMILY"))
                             .gender(Gender.valueOf(resultSet.getString("GENDER")))
                             .birthDate(LocalDate.parse(resultSet.getString("BIRTHDATE")))
-//                            todo : I should fill productlist
+//                            todo : I should fill productList
 //                            .productList()
                             .build();
             personList.add(person);
@@ -109,7 +109,7 @@ public class PersonDa implements DataAccess<Person, Integer> {
                             .family(resultSet.getString("FAMILY"))
                             .gender(Gender.valueOf(resultSet.getString("GENDER")))
                             .birthDate(LocalDate.parse(resultSet.getString("BIRTHDATE")))
-//                            todo : I should fill productlist
+//                            todo : I should fill productList
 //                            .productList()
                             .build();
         }
@@ -134,7 +134,7 @@ public class PersonDa implements DataAccess<Person, Integer> {
                             .family(resultSet.getString("FAMILY"))
                             .gender(Gender.valueOf(resultSet.getString("GENDER")))
                             .birthDate(LocalDate.parse(resultSet.getString("BIRTHDATE")))
-//                            todo : I should fill productlist
+//                            todo : I should fill productList
 //                            .productList()
                             .build();
             personList.add(person);

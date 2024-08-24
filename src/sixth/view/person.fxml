@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="741.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sixth.controllers.ProductControllers">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="741.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sixth.controllers.PersonControllers">
    <children>
       <GridPane layoutX="14.0" layoutY="48.0" prefHeight="318.0" prefWidth="257.0">
          <columnConstraints>
@@ -39,18 +39,18 @@
             <TextField fx:id="familyTxt" layoutX="70.0" layoutY="94.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <HBox prefHeight="34.0" prefWidth="178.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <RadioButton fx:id="manBtn" mnemonicParsing="false" prefHeight="24.0" prefWidth="84.0" selected="true" text="man" textFill="WHITE">
+                  <RadioButton fx:id="maleBtn" mnemonicParsing="false" prefHeight="24.0" prefWidth="84.0" selected="true" text="man" textFill="WHITE">
                      <toggleGroup>
                         <ToggleGroup fx:id="genderToggle" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="womanBtn" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" selected="true" text="woman" textFill="WHITE" toggleGroup="$genderToggle" />
+                  <RadioButton fx:id="femaleBtn" mnemonicParsing="false" prefHeight="23.0" prefWidth="94.0" selected="true" text="woman" textFill="WHITE" toggleGroup="$genderToggle" />
                </children>
             </HBox>
-            <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="birthDate" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <TableView fx:id="productTable" layoutX="278.0" layoutY="22.0" prefHeight="333.0" prefWidth="441.0" style="-fx-border-color: #7BA6B4;">
+      <TableView fx:id="personTable" layoutX="278.0" layoutY="22.0" prefHeight="333.0" prefWidth="441.0" style="-fx-border-color: #7BA6B4;">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="87.0" text="ID" />
             <TableColumn fx:id="nameCol" prefWidth="103.0" text="Name" />

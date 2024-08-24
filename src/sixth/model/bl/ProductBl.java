@@ -4,7 +4,7 @@ package sixth.model.bl;
 
 import sixth.model.da.ProductDa;
 import sixth.model.entity.Product;
-import sixth.model.entity.Person;
+
 
 
 public class ProductBl {

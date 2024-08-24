@@ -21,5 +21,7 @@ public class Person {
     private Gender gender;
     private LocalDate birthDate;
     private List<Product>productList;
+    private int  age  =2024- birthDate.getYear();
+
 
 }

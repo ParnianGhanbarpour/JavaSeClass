@@ -1,5 +1,6 @@
 package sixth.test;
 
+import sixth.controllers.ProductControllers;
 import sixth.model.da.PersonDa;
 import sixth.model.da.ProductDa;
 import sixth.model.entity.Person;
@@ -21,6 +22,7 @@ public class ProductTest {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
+
 
 
     }
