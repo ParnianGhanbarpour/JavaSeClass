@@ -44,8 +44,7 @@ public class PersonControllers implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    resetForm();
+      resetForm();
 
     saveBtn.setOnAction(event -> {
         try (PersonDa personDa = new PersonDa()) {
@@ -54,8 +53,8 @@ public class PersonControllers implements Initializable {
                     Person
                             .builder()
                             .id(Integer.parseInt(idTxt.getText()))
-                            .name(Validation.personNameValidator(nameTxt.getText()))
-                            .family(Validation.familyValidator(familyTxt.getText()))
+                            .name(validation.personNameValidator(nameTxt.getText()))
+                            .family(validation.familyValidator(familyTxt.getText()))
                             .gender(Gender.valueOf(selectedRdo.getText()))
                             .birthDate(birthDate.getValue())
 
@@ -78,11 +77,10 @@ public class PersonControllers implements Initializable {
                     Person
                             .builder()
                             .id(Integer.parseInt(idTxt.getText()))
-                            .name(Validation.personNameValidator(nameTxt.getText()))
-                            .family(Validation.familyValidator(familyTxt.getText()))
+                            .name(validation.personNameValidator(nameTxt.getText()))
+                            .family(validation.familyValidator(familyTxt.getText()))
                             .gender(Gender.valueOf(selectedRdo.getText()))
                             .birthDate(birthDate.getValue())
-
                             .build();
             personDa.edit(person);
 

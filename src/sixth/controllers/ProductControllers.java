@@ -141,6 +141,7 @@ public class ProductControllers implements Initializable {
 
     private void refreshTable(List<Product> productList) {
         ObservableList<Product> products = FXCollections.observableList(productList);
+        
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         brandCol.setCellValueFactory(new PropertyValueFactory<>("brand"));

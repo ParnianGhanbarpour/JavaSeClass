@@ -10,7 +10,7 @@ public class Validation {
             throw new Exception("Invalid Name");
         }
     }
-    public static String personNameValidator(String name) throws Exception {
+    public  String personNameValidator(String name) throws Exception {
         if(Pattern.matches("^[a-zA-Z\\s]{2,30}$", name)){
             return name;
         }else{
@@ -18,7 +18,7 @@ public class Validation {
         }
     }
 
-    public static String familyValidator(String family) throws Exception {
+    public  String familyValidator(String family) throws Exception {
         if(Pattern.matches("^[a-zA-Z\\s]{2,30}$", family)){
             return family;
         }else{

@@ -20,9 +20,9 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="68.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="139.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="108.0" minHeight="0.0" prefHeight="54.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
@@ -38,12 +38,12 @@
             <TextField fx:id="productTxt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <TableView fx:id="productTable" layoutX="278.0" layoutY="22.0" prefHeight="333.0" prefWidth="441.0" style="-fx-border-color: #7BA6B4;">
+      <TableView fx:id="mainTable" layoutX="278.0" layoutY="22.0" prefHeight="333.0" prefWidth="441.0" style="-fx-border-color: #7BA6B4;">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="87.0" text="ID" />
             <TableColumn fx:id="nameCol" prefWidth="103.0" text="Name" />
             <TableColumn fx:id="familyCol" prefWidth="74.0" text="Family" />
-            <TableColumn fx:id="productNameCol" prefWidth="87.0" text="Product" />
+            <TableColumn fx:id="productCol" prefWidth="87.0" text="Product" />
             <TableColumn fx:id="sellTimeCol" prefWidth="87.0" text="Sell Time" />
          </columns>
       </TableView>

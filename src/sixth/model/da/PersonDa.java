@@ -12,15 +12,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonDa implements DataAccess<Person, Integer>{
+public class PersonDa implements AutoCloseable{
     private final Connection connection;
     private PreparedStatement preparedStatement;
+
     public PersonDa() throws SQLException {
         connection = JdbcProvider.getConnection();
     }
 
-    @Override
-    public void save(Person person) throws Exception {
+
+    public void save(Person person) throws SQLException {
+        person.setId(JdbcProvider.getJdbcProvider().getNextId("PERSON_SEQ"));
         preparedStatement = connection.prepareStatement(
                 "SELECT PERSON_SEQ.NEXTVAL AS NEXT_ID FROM DUAL"
         );
@@ -39,8 +41,8 @@ public class PersonDa implements DataAccess<Person, Integer>{
         preparedStatement.execute();
     }
 
-    @Override
-    public void edit(Person person) throws Exception {
+
+    public void edit(Person person) throws SQLException {
         preparedStatement = connection.prepareStatement(
                 "UPDATE PERSON SET NAME=?, FAMILY=?,GENDER=?,BIRTHDATE=? WHERE ID=?"
         );
@@ -53,8 +55,8 @@ public class PersonDa implements DataAccess<Person, Integer>{
         preparedStatement.execute();
     }
 
-    @Override
-    public void remove(Integer id) throws Exception {
+
+    public void remove(Integer id) throws SQLException {
 
         preparedStatement = connection.prepareStatement(
                 "DELETE FROM PERSON WHERE ID=?"
@@ -63,13 +65,13 @@ public class PersonDa implements DataAccess<Person, Integer>{
         preparedStatement.execute();
     }
 
-    @Override
-    public List<Person> findAll() throws Exception {
-        preparedStatement = connection.prepareStatement(
-                "SELECT * FROM PERSON"
-        );
 
+    public List<Person> findAll() throws SQLException {
+        preparedStatement = connection.prepareStatement(
+                "SELECT * FROM PERSON ORDER BY ID"
+        );
         ResultSet resultSet = preparedStatement.executeQuery();
+
         List<Person> personList = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -90,8 +92,8 @@ public class PersonDa implements DataAccess<Person, Integer>{
         return personList;
     }
 
-    @Override
-    public Person findById(Integer id) throws Exception {
+
+    public Person findById(Integer id) throws SQLException {
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM PERSON WHERE ID=?"
         );
@@ -116,7 +118,7 @@ public class PersonDa implements DataAccess<Person, Integer>{
         return person;
     }
 
-    public List<Person> findByFamily(String family) throws Exception {
+    public List<Person> findByFamily(String family) throws SQLException {
         preparedStatement = connection.prepareStatement(
                 "SELECT * FROM PERSON WHERE FAMILY=?"
         );
