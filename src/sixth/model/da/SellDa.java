@@ -2,6 +2,7 @@ package sixth.model.da;
 
 
 
+import sixth.model.bl.PersonBl;
 import sixth.model.entity.*;
 import sixth.model.utils.JdbcProvider;
 
@@ -28,10 +29,10 @@ public class SellDa implements AutoCloseable {
             );
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            sell.setId(resultSet.getInt("NEXT_ID"));
+            sell.setId(resultSet.getInt("NEXT_USERNAME"));
 
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO SELL (ID, PRICE, SELL_TIME, OWNER_ID, PRODUCT_ID) VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO SELL (ID, PRICE, SELL_TIME, PERSON_ID, PRODUCT_ID) VALUES (?, ?, ?, ?, ?)"
             );
             preparedStatement.setInt(1, sell.getId());
             preparedStatement.setInt(2, sell.getPrice());
@@ -50,7 +51,7 @@ public class SellDa implements AutoCloseable {
     public void edit(Sell sell) throws SQLException {
         try {
             preparedStatement = connection.prepareStatement(
-                    "UPDATE SELL SET PRICE=?, SELL_TIME=?, OWNER_ID=?, PRODUCT_ID=? WHERE ID=?"
+                    "UPDATE SELL SET PRICE=?, SELL_TIME=?, PERSON_ID=?, PRODUCT_ID=? WHERE ID=?"
             );
 
             preparedStatement.setInt(1, sell.getPrice());
@@ -94,8 +95,8 @@ public class SellDa implements AutoCloseable {
                         .id(resultSet.getInt("ID"))
                         .price(resultSet.getInt("PRICE"))
                         .sellTime(LocalDateTime.parse(resultSet.getString("SELL_TIME")))
-                    //    .person(new Person(resultSet.getInt("OWNER_ID")))
-                    //    .product(new Product(resultSet.getInt("PRODUCT_ID")))
+                        .person(PersonBl.findByUsername(resultSet.getInt("PERSON_USERNAME")))
+                        .product(new Product(resultSet.getInt("PRODUCT_ID")))
                         .build();
                 sellList.add(sell);
             }
@@ -121,8 +122,8 @@ public class SellDa implements AutoCloseable {
                         .id(resultSet.getInt("ID"))
                         .price(resultSet.getInt("PRICE"))
                         .sellTime(LocalDateTime.parse(resultSet.getString("SELL_TIME")))
-                //        .person(new Person(resultSet.getInt("OWNER_ID")))
-                //        .product(new Product(resultSet.getInt("PRODUCT_ID")))
+                    //    .person(new Person(resultSet.getInt("PERSON_ID")))
+                      //  .product(new Product(resultSet.getInt("PRODUCT_ID")))
                         .build();
             }
         } finally {

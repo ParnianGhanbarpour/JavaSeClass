@@ -22,53 +22,47 @@ public class PersonDa implements AutoCloseable{
 
 
     public void save(Person person) throws SQLException {
-        person.setId(JdbcProvider.getJdbcProvider().getNextId("PERSON_SEQ"));
         preparedStatement = connection.prepareStatement(
-                "SELECT PERSON_SEQ.NEXTVAL AS NEXT_ID FROM DUAL"
+                "INSERT INTO PERSON VALUES (?,?,?,?,?,?)"
         );
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        person.setId(resultSet.getInt("NEXT_ID"));
-
-        preparedStatement = connection.prepareStatement(
-                "INSERT INTO PERSON VALUES (?,?,?,?,?)"
-        );
-        preparedStatement.setInt(1, person.getId());
-        preparedStatement.setString(2, person.getName());
-        preparedStatement.setString(3, person.getFamily());
-        preparedStatement.setString(4, String.valueOf(person.getGender()));
-        preparedStatement.setString(5, String.valueOf(person.getBirthDate()));
+        preparedStatement.setString(1, person.getUsername());
+        preparedStatement.setString(2, person.getPassword());
+        preparedStatement.setString(3, person.getName());
+        preparedStatement.setString(4, person.getFamily());
+        preparedStatement.setString(5, String.valueOf(person.getGender()));
+        preparedStatement.setString(6, String.valueOf(person.getBirthDate()));
         preparedStatement.execute();
     }
 
 
     public void edit(Person person) throws SQLException {
         preparedStatement = connection.prepareStatement(
-                "UPDATE PERSON SET NAME=?, FAMILY=?,GENDER=?,BIRTHDATE=? WHERE ID=?"
+                "UPDATE PERSON SET PASSWORD=?, NAME=?, FAMILY=?,GENDER=?,BIRTHDATE=? WHERE USERNAME=?"
         );
 
         preparedStatement.setString(1, person.getName());
         preparedStatement.setString(2, person.getFamily());
         preparedStatement.setString(3, String.valueOf(person.getGender()));
         preparedStatement.setString(4, String.valueOf(person.getBirthDate()));
-        preparedStatement.setInt(5, person.getId());
+        preparedStatement.setString(5, String.getUsername);
         preparedStatement.execute();
     }
 
 
-    public void remove(Integer id) throws SQLException {
+    public void remove(String username) throws SQLException {
 
         preparedStatement = connection.prepareStatement(
-                "DELETE FROM PERSON WHERE ID=?"
+                "UPDATE PERSON SET ACTIVE=0 WHERE USERNAME=?"
         );
-        preparedStatement.setInt(1, id);
+        preparedStatement.setString(1, username);
         preparedStatement.execute();
     }
 
 
     public List<Person> findAll() throws SQLException {
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM PERSON ORDER BY ID"
+                "SELECT * FROM PERSON WHERE ACTIVE=1 ORDER BY USERNAME"
+
         );
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -79,7 +73,8 @@ public class PersonDa implements AutoCloseable{
             Person person =
                     Person
                             .builder()
-                            .id(resultSet.getInt("ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .gender(Gender.valueOf(resultSet.getString("GENDER")))
@@ -93,11 +88,11 @@ public class PersonDa implements AutoCloseable{
     }
 
 
-    public Person findById(Integer id) throws SQLException {
+    public Person findByUsername(String username) throws SQLException {
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM PERSON WHERE ID=?"
+                "SELECT * FROM PERSON WHERE USERNAME=? AND ACTIVE=1"
         );
-        preparedStatement.setInt(1, id);
+        preparedStatement.setString(1, username);
         ResultSet resultSet = preparedStatement.executeQuery();
         Person person = null;
 
@@ -106,7 +101,7 @@ public class PersonDa implements AutoCloseable{
             person =
                     Person
                             .builder()
-                            .id(resultSet.getInt("ID"))
+                            .username(resultSet.getString("USERNAME"))
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .gender(Gender.valueOf(resultSet.getString("GENDER")))
@@ -120,7 +115,7 @@ public class PersonDa implements AutoCloseable{
 
     public List<Person> findByFamily(String family) throws SQLException {
         preparedStatement = connection.prepareStatement(
-                "SELECT * FROM PERSON WHERE FAMILY=?"
+                "SELECT * FROM PERSON WHERE FAMILY=? AND ACTIVE=1"
         );
         preparedStatement.setString(1, family);
 
@@ -131,7 +126,8 @@ public class PersonDa implements AutoCloseable{
             Person person =
                     Person
                             .builder()
-                            .id(resultSet.getInt("ID"))
+                            .username(resultSet.getString("USERNAME"))
+                            .password(resultSet.getString("PASSWORD"))
                             .name(resultSet.getString("NAME"))
                             .family(resultSet.getString("FAMILY"))
                             .gender(Gender.valueOf(resultSet.getString("GENDER")))

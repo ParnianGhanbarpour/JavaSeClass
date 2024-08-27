@@ -7,7 +7,7 @@ import sixth.model.entity.Person;
 
     public class PersonTest {
         public static void main(String[] args) throws Exception {
-            Person person = Person.builder().id(4).name("Parnian").family("Ghanbarpour").build();
+            Person person = Person.builder().username("parnian").name("Parnian").family("Ghanbarpour").build();
 
             try(PersonDa personDa = new PersonDa()){
 //            personDa.save(person);

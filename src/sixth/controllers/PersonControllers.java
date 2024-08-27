@@ -52,7 +52,7 @@ public class PersonControllers implements Initializable {
             Person person =
                     Person
                             .builder()
-                            .id(Integer.parseInt(idTxt.getText()))
+                            .username(String(passTxt.getText()))
                             .name(validation.personNameValidator(nameTxt.getText()))
                             .family(validation.familyValidator(familyTxt.getText()))
                             .gender(Gender.valueOf(selectedRdo.getText()))
@@ -76,7 +76,7 @@ public class PersonControllers implements Initializable {
             Person person =
                     Person
                             .builder()
-                            .id(Integer.parseInt(idTxt.getText()))
+                            .
                             .name(validation.personNameValidator(nameTxt.getText()))
                             .family(validation.familyValidator(familyTxt.getText()))
                             .gender(Gender.valueOf(selectedRdo.getText()))

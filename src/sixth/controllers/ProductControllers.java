@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lombok.extern.log4j.Log4j;
 import sixth.model.da.ProductDa;
 import sixth.model.entity.Brand;
 import sixth.model.entity.Product;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+@Log4j
 public class ProductControllers implements Initializable {
     private final Validation validation = new Validation();
 
@@ -103,23 +105,27 @@ public class ProductControllers implements Initializable {
 
 
         productTable.setOnMouseReleased(event -> {
-            Product product = productTable.getSelectionModel().getSelectedItem();
-            idTxt.setText(String.valueOf(product.getId()));
-            nameTxt.setText(product.getName());
-            if (product.getBrand().equals(Brand.Zara)) {
-                zaraBtn.setSelected(true);
-            }
-            if (product.getBrand().equals(Brand.Gucci)) {
-                gucciBtn.setSelected(true);
-            }
-            if (product.getBrand().equals(Brand.LouiseVuitton)) {
-                louseVuittonBtn.setSelected(true);
-            }
-            if (product.getBrand().equals(Brand.Nike)) {
-                nikeBtn.setSelected(true);
-            }
-            priceTxt.setText(String.valueOf(product.getPrice()));
-            countTxt.setText(String.valueOf(product.getCount()));
+           try{
+               Product product = productTable.getSelectionModel().getSelectedItem();
+               idTxt.setText(String.valueOf(product.getId()));
+               nameTxt.setText(product.getName());
+               if (product.getBrand().equals(Brand.Zara)) {
+                   zaraBtn.setSelected(true);
+               }
+               if (product.getBrand().equals(Brand.Gucci)) {
+                   gucciBtn.setSelected(true);
+               }
+               if (product.getBrand().equals(Brand.LouiseVuitton)) {
+                   louseVuittonBtn.setSelected(true);
+               }
+               if (product.getBrand().equals(Brand.Nike)) {
+                   nikeBtn.setSelected(true);
+               }
+               priceTxt.setText(String.valueOf(product.getPrice()));
+               countTxt.setText(String.valueOf(product.getCount()));
+           }catch (Exception e){
+               log.error("No Row Selected !");
+           }
         });
     }
 

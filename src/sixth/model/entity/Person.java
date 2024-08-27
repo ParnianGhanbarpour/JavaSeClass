@@ -15,13 +15,16 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 @SuperBuilder
 public class Person {
-    private int id;
-    private String name ;
+    private String username;
+    private String password;
+    private String name;
     private String family;
     private Gender gender;
     private LocalDate birthDate;
-    private List<Product>productList;
-    private int  age  =2024- birthDate.getYear();
+    private int age;
+    private boolean active;
 
-
+    public int getAge() {
+        return 2024 - birthDate.getYear();
+    }
 }
