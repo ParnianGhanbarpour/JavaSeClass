@@ -1,6 +1,5 @@
 package sixth.model.da;
 
-package sixth.model.da;
 
 import sixth.model.entity.Gender;
 import sixth.model.entity.Person;

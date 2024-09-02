@@ -16,9 +16,12 @@ import java.time.LocalDateTime;
 
 public class Sell {
     private int id;
-    private Person person;
-    private Product product;
-    private int price;
+    private String personUsername;
+    private int productId;
+
+    private double price;
     private LocalDateTime sellTime;
+
+    private boolean deleted;
 }
 

@@ -1,15 +1,16 @@
 package sixth.model.da;
 
-
-
 import sixth.model.bl.PersonBl;
-import sixth.model.entity.*;
+import sixth.model.entity.Person;
+import sixth.model.entity.Product;
+import sixth.model.entity.Sell;
 import sixth.model.utils.JdbcProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +29,19 @@ public class SellDa implements AutoCloseable {
                     "SELECT SELL_SEQ.NEXTVAL AS NEXT_ID FROM DUAL"
             );
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            sell.setId(resultSet.getInt("NEXT_USERNAME"));
+            if (resultSet.next()) {
+                sell.setId(resultSet.getInt("NEXT_ID"));
+            }
 
             preparedStatement = connection.prepareStatement(
-                    "INSERT INTO SELL (ID, PRICE, SELL_TIME, PERSON_ID, PRODUCT_ID) VALUES (?, ?, ?, ?, ?)"
+                    "INSERT INTO SELL (ID, PRICE, SELL_TIME, USERNAME, PRODUCT_ID, DELETED) VALUES (?, ?, ?, ?, ?, ?)"
             );
             preparedStatement.setInt(1, sell.getId());
-            preparedStatement.setInt(2, sell.getPrice());
-            preparedStatement.setString(3, sell.getSellTime().toString());
-            preparedStatement.setInt(4, sell.getPerson().getId());
-            preparedStatement.setInt(5, sell.getProduct().getId());
+            preparedStatement.setDouble(2, sell.getPrice());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(sell.getSellTime()));
+            preparedStatement.setString(4, String.valueOf(sell.getPersonUsername()));
+            preparedStatement.setInt(5, sell.getProductId());
+            preparedStatement.setInt(6, sell.isDeleted() ? 1 : 0);
 
             preparedStatement.executeUpdate();
         } finally {
@@ -51,14 +54,15 @@ public class SellDa implements AutoCloseable {
     public void edit(Sell sell) throws SQLException {
         try {
             preparedStatement = connection.prepareStatement(
-                    "UPDATE SELL SET PRICE=?, SELL_TIME=?, PERSON_ID=?, PRODUCT_ID=? WHERE ID=?"
+                    "UPDATE SELL SET PRICE=?, SELL_TIME=?, USERNAME=?, PRODUCT_ID=?, DELETED=? WHERE ID=?"
             );
 
-            preparedStatement.setInt(1, sell.getPrice());
-            preparedStatement.setString(2, sell.getSellTime().toString());
-            preparedStatement.setInt(3, sell.getPerson().getId());
-            preparedStatement.setInt(4, sell.getProduct().getId());
-            preparedStatement.setInt(5, sell.getId());
+            preparedStatement.setDouble(1, sell.getPrice());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(sell.getSellTime()));
+            preparedStatement.setString(3, sell.getPersonUsername());
+            preparedStatement.setInt(4, sell.getProductId());
+            preparedStatement.setInt(5, sell.isDeleted() ? 1 : 0);
+            preparedStatement.setInt(6, sell.getId());
 
             preparedStatement.executeUpdate();
         } finally {
@@ -71,7 +75,7 @@ public class SellDa implements AutoCloseable {
     public void remove(int id) throws SQLException {
         try {
             preparedStatement = connection.prepareStatement(
-                    "DELETE FROM SELL WHERE ID=?"
+                    "UPDATE SELL SET DELETED=1 WHERE ID=?"
             );
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
@@ -86,17 +90,18 @@ public class SellDa implements AutoCloseable {
         List<Sell> sellList = new ArrayList<>();
         try {
             preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM SELL ORDER BY ID"
+                    "SELECT * FROM SELL WHERE DELETED=0 ORDER BY SELL_TIME DESC"
             );
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 Sell sell = Sell.builder()
                         .id(resultSet.getInt("ID"))
-                        .price(resultSet.getInt("PRICE"))
-                        .sellTime(LocalDateTime.parse(resultSet.getString("SELL_TIME")))
-                        .person(PersonBl.findByUsername(resultSet.getInt("PERSON_USERNAME")))
-                        .product(new Product(resultSet.getInt("PRODUCT_ID")))
+                        .price(resultSet.getDouble("PRICE"))
+                        .sellTime(resultSet.getTimestamp("SELL_TIME").toLocalDateTime())
+                        .personUsername(resultSet.getString("PERSON_USERNAME"))
+                        .productId(resultSet.getInt("PRODUCT_ID"))
+                        .deleted(resultSet.getInt("DELETED") == 1)
                         .build();
                 sellList.add(sell);
             }
@@ -108,11 +113,11 @@ public class SellDa implements AutoCloseable {
         return sellList;
     }
 
-    public Sell findById(Integer id) throws SQLException {
+    public Sell findById(int id) throws SQLException {
         Sell sell = null;
         try {
             preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM SELL WHERE ID=?"
+                    "SELECT * FROM SELL WHERE ID=? AND DELETED=0"
             );
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -120,10 +125,11 @@ public class SellDa implements AutoCloseable {
             if (resultSet.next()) {
                 sell = Sell.builder()
                         .id(resultSet.getInt("ID"))
-                        .price(resultSet.getInt("PRICE"))
-                        .sellTime(LocalDateTime.parse(resultSet.getString("SELL_TIME")))
-                    //    .person(new Person(resultSet.getInt("PERSON_ID")))
-                      //  .product(new Product(resultSet.getInt("PRODUCT_ID")))
+                        .price(resultSet.getDouble("PRICE"))
+                        .sellTime(resultSet.getTimestamp("SELL_TIME").toLocalDateTime())
+                        .personUsername(resultSet.getString("PERSON_USERNAME"))
+                        .productId(resultSet.getInt("PRODUCT_ID"))
+                        .deleted(resultSet.getInt("DELETED") == 1)
                         .build();
             }
         } finally {
@@ -136,7 +142,11 @@ public class SellDa implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        preparedStatement.close();
-        connection.close();
+        if (preparedStatement != null && !preparedStatement.isClosed()) {
+            preparedStatement.close();
+        }
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
     }
 }
