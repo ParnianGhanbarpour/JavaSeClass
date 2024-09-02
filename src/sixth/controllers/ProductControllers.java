@@ -105,27 +105,27 @@ public class ProductControllers implements Initializable {
 
 
         productTable.setOnMouseReleased(event -> {
-           try{
-               Product product = productTable.getSelectionModel().getSelectedItem();
-               idTxt.setText(String.valueOf(product.getId()));
-               nameTxt.setText(product.getName());
-               if (product.getBrand().equals(Brand.Zara)) {
-                   zaraBtn.setSelected(true);
-               }
-               if (product.getBrand().equals(Brand.Gucci)) {
-                   gucciBtn.setSelected(true);
-               }
-               if (product.getBrand().equals(Brand.LouiseVuitton)) {
-                   louseVuittonBtn.setSelected(true);
-               }
-               if (product.getBrand().equals(Brand.Nike)) {
-                   nikeBtn.setSelected(true);
-               }
-               priceTxt.setText(String.valueOf(product.getPrice()));
-               countTxt.setText(String.valueOf(product.getCount()));
-           }catch (Exception e){
-               log.error("No Row Selected !");
-           }
+            try{
+                Product product = productTable.getSelectionModel().getSelectedItem();
+                idTxt.setText(String.valueOf(product.getId()));
+                nameTxt.setText(product.getName());
+                if (product.getBrand().equals(Brand.Zara)) {
+                    zaraBtn.setSelected(true);
+                }
+                if (product.getBrand().equals(Brand.Gucci)) {
+                    gucciBtn.setSelected(true);
+                }
+                if (product.getBrand().equals(Brand.LouiseVuitton)) {
+                    louseVuittonBtn.setSelected(true);
+                }
+                if (product.getBrand().equals(Brand.Nike)) {
+                    nikeBtn.setSelected(true);
+                }
+                priceTxt.setText(String.valueOf(product.getPrice()));
+                countTxt.setText(String.valueOf(product.getCount()));
+            }catch (Exception e){
+                log.error("No Row Selected !");
+            }
         });
     }
 
@@ -147,7 +147,7 @@ public class ProductControllers implements Initializable {
 
     private void refreshTable(List<Product> productList) {
         ObservableList<Product> products = FXCollections.observableList(productList);
-        
+
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         brandCol.setCellValueFactory(new PropertyValueFactory<>("brand"));

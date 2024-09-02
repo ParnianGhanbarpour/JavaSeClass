@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sixth.model.utils.Validation;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import java.net.URL;
@@ -22,114 +21,135 @@ public class PersonControllers implements Initializable {
     private final Validation validation = new Validation();
 
     @FXML
-    private TextField idTxt ,nameTxt ,familyTxt ;
+    private TextField usernameTxt, passwordTxt, nameTxt, familyTxt;
     @FXML
     private ToggleGroup genderToggle;
     @FXML
-    private RadioButton maleBtn, femaleBtn ;
+    private RadioButton maleBtn, femaleBtn;
     @FXML
     private DatePicker birthDate;
 
     @FXML
-    private Button saveBtn, editBtn, removeBtn;
+    private Button saveBtn, editBtn, removeBtn, loginBtn;
     @FXML
     private TableView<Person> personTable;
     @FXML
     private TableColumn<Person, Integer> idCol;
     @FXML
-    private TableColumn<Person, String> nameCol, familyCol ,genderCol;
+    private TableColumn<Person, String> nameCol, familyCol, genderCol;
     @FXML
-    private  TableColumn<Person,DatePicker>birthDateCol;
+    private TableColumn<Person, LocalDate> birthDateCol;
 
+    private Person loggedInPerson;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      resetForm();
+        resetForm();
 
-    saveBtn.setOnAction(event -> {
-        try (PersonDa personDa = new PersonDa()) {
-            RadioButton selectedRdo = (RadioButton) genderToggle.getSelectedToggle();
-            Person person =
-                    Person
-                            .builder()
-                            .username(String(passTxt.getText()))
-                            .name(validation.personNameValidator(nameTxt.getText()))
-                            .family(validation.familyValidator(familyTxt.getText()))
-                            .gender(Gender.valueOf(selectedRdo.getText()))
-                            .birthDate(birthDate.getValue())
+        loginBtn.setOnAction(event -> {
+            try (PersonDa personDa = new PersonDa()) {
+                String username = usernameTxt.getText();
+                String password = passwordTxt.getText();
 
-                            .build();
-            personDa.save(person);
+                loggedInPerson = personDa.findByUsernameAndPassword(username, password);
+                if (loggedInPerson != null) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Login Successful\n" + loggedInPerson);
+                    alert.show();
+                    loadPersonDetails(loggedInPerson);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Invalid Username or Password");
+                    alert.show();
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Login Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Person Saved\n" + person);
-            alert.show();
-            resetForm();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Person Save Error\n" + e.getMessage());
-            alert.show();
-        }
-    });
-    editBtn.setOnAction(event -> {
-        try (PersonDa personDa = new PersonDa()) {
-            // Data Validation
-            RadioButton selectedRdo = (RadioButton) genderToggle.getSelectedToggle();
-            Person person =
-                    Person
-                            .builder()
-                            .
-                            .name(validation.personNameValidator(nameTxt.getText()))
-                            .family(validation.familyValidator(familyTxt.getText()))
-                            .gender(Gender.valueOf(selectedRdo.getText()))
-                            .birthDate(birthDate.getValue())
-                            .build();
-            personDa.edit(person);
+        saveBtn.setOnAction(event -> {
+            try (PersonDa personDa = new PersonDa()) {
+                RadioButton selectedRdo = (RadioButton) genderToggle.getSelectedToggle();
+                Person person =
+                        Person
+                                .builder()
+                                .username(usernameTxt.getText())
+                                .password(passwordTxt.getText())
+                                .name(validation.personNameValidator(nameTxt.getText()))
+                                .family(validation.familyValidator(familyTxt.getText()))
+                                .gender(Gender.valueOf(selectedRdo.getText()))
+                                .birthDate(birthDate.getValue())
+                                .build();
+                personDa.save(person);
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Person Edited\n" + person);
-            alert.show();
-            resetForm();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Person Edit Error\n" + e.getMessage());
-            alert.show();
-        }
-    });
-    removeBtn.setOnAction(event -> {
-        try (PersonDa personDa = new PersonDa()) {
-            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure To Remove Person ?");
-            if (confirmAlert.showAndWait().get() == ButtonType.OK) {
-                int id = Integer.parseInt(idTxt.getText());
-                personDa.remove(id);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Person Removed With ID : " + id);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Person Saved\n" + person);
                 alert.show();
                 resetForm();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Person Save Error\n" + e.getMessage());
+                alert.show();
             }
+        });
 
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Person Remove Error\n" + e.getMessage());
-            alert.show();
-        }
-    });
-     personTable.setOnMouseReleased(event->{
-        Person person = personTable.getSelectionModel().getSelectedItem();
-        idTxt.setText(String.valueOf(person.getId()));
+        editBtn.setOnAction(event -> {
+            try (PersonDa personDa = new PersonDa()) {
+                RadioButton selectedRdo = (RadioButton) genderToggle.getSelectedToggle();
+                loggedInPerson.setName(validation.personNameValidator(nameTxt.getText()));
+                loggedInPerson.setFamily(validation.familyValidator(familyTxt.getText()));
+                loggedInPerson.setGender(Gender.valueOf(selectedRdo.getText()));
+                loggedInPerson.setBirthDate(birthDate.getValue());
+
+                personDa.edit(loggedInPerson);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Person Edited\n" + loggedInPerson);
+                alert.show();
+                resetForm();
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Person Edit Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        removeBtn.setOnAction(event -> {
+            try (PersonDa personDa = new PersonDa()) {
+                Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are You Sure To Remove Person?");
+                if (confirmAlert.showAndWait().get() == ButtonType.OK) {
+                    personDa.remove(String.valueOf(loggedInPerson));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Person Removed With Username : " + loggedInPerson.getUsername());
+                    alert.show();
+                    resetForm();
+                }
+
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Person Remove Error\n" + e.getMessage());
+                alert.show();
+            }
+        });
+
+        personTable.setOnMouseReleased(event -> {
+            Person person = personTable.getSelectionModel().getSelectedItem();
+            loadPersonDetails(person);
+        });
+    }
+
+    private void loadPersonDetails(Person person) {
+        usernameTxt.setText(person.getUsername());
+        passwordTxt.setText(person.getPassword());
         nameTxt.setText(person.getName());
         familyTxt.setText(person.getFamily());
-        if(person.getGender().equals(Gender.male)){
+        if (person.getGender().equals(Gender.male)) {
             maleBtn.setSelected(true);
-        }else {
+        } else {
             femaleBtn.setSelected(true);
         }
         birthDate.setValue(person.getBirthDate());
-
-     });
     }
+
     private void resetForm() {
-        idTxt.clear();
+        usernameTxt.clear();
+        passwordTxt.clear();
         nameTxt.clear();
         familyTxt.clear();
-
-
         birthDate.setValue(LocalDate.now());
-
         femaleBtn.setSelected(true);
 
         try (PersonDa personDa = new PersonDa()) {
@@ -139,6 +159,7 @@ public class PersonControllers implements Initializable {
             alert.show();
         }
     }
+
     private void refreshTable(List<Person> personList) {
         ObservableList<Person> persons = FXCollections.observableList(personList);
 
@@ -146,13 +167,8 @@ public class PersonControllers implements Initializable {
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         familyCol.setCellValueFactory(new PropertyValueFactory<>("family"));
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        birthDateCol.setCellValueFactory(new PropertyValueFactory<>("birth Date"));
+        birthDateCol.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
 
         personTable.setItems(persons);
     }
-
-
 }
-
-
-
